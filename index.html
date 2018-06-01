@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>EOS Paper Wallet</title>
+  <script src="eosjs-ecc.js"></script>
+  <script src="qr.js"></script>
+</head>
+
+<body>
+  <h1 class="no-print">EOS Paper Wallet</h1>
+
+  <div style="outline-style: solid; outline-width: thin;">
+    <div class="qr">
+      <h3 style="margin:0; padding-left:10.5px;">Public Key</h3>
+      <canvas style="padding-left: 10px;" id="publicKeyCanvas"></canvas>
+    </div>
+
+    <div class="logo-container">
+      <img class="logo-image" src="eos_cafe_calgary.png" alt="EOS Cafe">
+    </div>
+
+    <div class="qr">
+      <h3 style="margin-top:20px;margin-bottom: 0;padding-left:10.5px;">Private Key </h1>
+      <canvas style="padding-left: 10px;" id="privateKeyCanvas"></canvas>
+    </div>
+
+    <div class="key-text">
+      <h3 style="margin-bottom: 0px;">Public Key <span style="color:green">(SHARE)</span></h1>
+      <div id="publicKey"> </div>
+      <h3 style="margin-bottom: 0px;">Private Key <span style="color:red">(DON'T SHARE)</span></h1>
+      <div id="privateKey"></div>
+    </div>
+  </div>
+
+  <button class="button button_primary no-print" style="margin-top:25px" onclick="initialize();"> Re-Generate </button>
+  <button class="button button_primary no-print" onclick="window.print();"> Print </button>
+
+  <script>
+    var ecc = eosjs_ecc
+
+    function initialize(){
+      // Create a new random private key
+      ecc.randomKey().then(privateWif =>  {
+        let publicKey = ecc.privateToPublic(privateWif)
+
+        document.getElementById("publicKey").textContent = publicKey;
+        var qr = new QRious({
+          element: document.getElementById('publicKeyCanvas'),
+          value: publicKey,
+          size: 150
+        });
+
+        document.getElementById("privateKey").textContent = privateWif;
+        var qr = new QRious({
+          element: document.getElementById('privateKeyCanvas'),
+          value: publicKey,
+          size: 150
+        });
+      })
+    }
+
+    initialize()
+  </script>
+
+  <style type="text/css" scoped>
+    html {
+      box-sizing: border-box;
+    }
+
+    *,
+    *:before,
+    *:after {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-size: 1rem;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.5;
+      width:700px;
+    }
+
+    .content {
+      margin: 64px auto;
+      width: 94%;
+      max-width: 600px;
+      text-align: center;
+    }
+
+    .button {
+      display: inline-block;
+      margin: 0;
+      padding: 0.75rem 1rem;
+      border: 0;
+      border-radius: 0.317rem;
+      background-color: #aaa;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1rem;
+      line-height: 1.5;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      cursor: pointer;
+      -webkit-appearance: none;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .button:hover {
+      opacity: 0.85;
+    }
+
+    .button:active {
+      box-shadow: inset 0 3px 4px hsla(0, 0%, 0%, 0.2);
+    }
+
+    .button:focus {
+      outline: thin dotted #444;
+      outline: 5px auto -webkit-focus-ring-color;
+      outline-offset: -2px;
+    }
+
+    .button_primary {
+      background-color: #1fa3ec;
+    }
+
+    .button_secondary {
+      background-color: #e98724;
+    }
+
+    .logo-container {
+      width:37%;
+      display:inline-block;
+      padding-left: 15px;
+      vertical-align:top;
+    }
+
+    .logo-image {
+      padding-top: 50px;
+      margin-left: 10px;
+      width: 200px;
+    }
+    .qr {
+      width:30%;
+      display:inline-block;
+      padding-left: 15px;
+    }
+
+    .key-text {
+        padding-left: 27px;
+        display: block;
+        vertical-align: top;
+        padding-bottom: 20px;
+    }
+
+    @media print
+    {
+        .no-print, .no-print *
+        {
+            display: none !important;
+        }
+    }
+  </style>
+</body>
+</html>

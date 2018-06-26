@@ -56,7 +56,7 @@
         document.getElementById("privateKey").textContent = privateWif;
         var qr = new QRious({
           element: document.getElementById('privateKeyCanvas'),
-          value: publicKey,
+          value: privateWif,
           size: 150
         });
       })

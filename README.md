@@ -1,5 +1,7 @@
 # EOS Paper Wallet
 
+** Any users who downloaded before June 26, there was a bug identified int he QR generation, so the QR code will not function properly. All new QR codes are functional **
+
 ## Instructions
 You can visit https://eoscafe.github.io/eos-paper-wallet/ or download the files in this github to run locally.
 
